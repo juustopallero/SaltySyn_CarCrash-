@@ -59,7 +59,7 @@ local function CarEffects()
 			DisableControlAction(0,64,true) -- veh turn right
 			DisableControlAction(0,75,true) -- disable exit vehicle ]]
 			Citizen.CreateThread(function()
-			local vehicle = GetVehiclePedIsIn(PlayerPedId(-1), false)
+			local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
 			local tyre = math.random(0, 20) -- created ranom chance for tires to pop, it is not 1-20, tires pop on individual triggers ,0,1,2,3,4,5,6 etc depending on model vehicle. 
 			local tankdamage = math.random(150, 300) -- applies damage to gas tank on crash, leaking tank will eventually run out of fuel. 
 			local enginedamage = math.random(150, 300) 
@@ -90,7 +90,7 @@ end
 
 Citizen.CreateThread(function()
 	while true do
-		Citizen.Wait(0)
+		Citizen.Wait(1)
 		-- Get the vehicle the player is in, and continue if it exists
 		local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
 		if DoesEntityExist(vehicle) then
@@ -111,8 +111,7 @@ Citizen.CreateThread(function()
 						concussed()
 						CarEffects()
 							if Config.DamagePedOnCrash then
-							local ped = GetPlayerPed(-1)
-							ApplyDamageToPed(ped, Config.PedCrashDamage, true) 
+							ApplyDamageToPed(PlayerPedId(), Config.PedCrashDamage, true) 
 							--[[ print("pedamagesbydamage")  ]]
 							end 
 						end 
@@ -131,9 +130,8 @@ Citizen.CreateThread(function()
 						concussed()
 						CarEffects()
 						if Config.DamagePedOnCrash then
-						local ped = GetPlayerPed(-1)
-						ApplyDamageToPed(ped, Config.PedCrashDamage, true) 
-						--[[ print("pedamagesbyispeed")   ]]
+						ApplyDamageToPed(PlayerPedId(), Config.PedCrashDamage, true) 
+						-- print("pedamagesbyispeed")
 						end 
 					end
 					oldSpeed = currentSpeed
